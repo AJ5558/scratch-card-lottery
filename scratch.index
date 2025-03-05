@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch & Win Lottery</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .scratch-card {
+            position: relative;
+            width: 300px;
+            height: 150px;
+            background-color: #ccc;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #28a745;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scratch & Win Lottery</h1>
+        <p>Scratch the card below to reveal your prize!</p>
+        <div class="scratch-card">
+            <div id="prize" class="result">WIN $100</div>
+            <canvas id="scratchCanvas"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("scratchCanvas");
+        const ctx = canvas.getContext("2d");
+        const prize = document.getElementById("prize");
+        
+        canvas.width = 300;
+        canvas.height = 150;
+        
+        ctx.fillStyle = "#b8b8b8";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        let isScratching = false;
+        
+        function startScratching(event) {
+            isScratching = true;
+            scratch(event);
+        }
+
+        function stopScratching() {
+            isScratching = false;
+        }
+
+        function scratch(event) {
+            if (!isScratching) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (event.clientX || event.touches[0].clientX) - rect.left;
+            const y = (event.clientY || event.touches[0].clientY) - rect.top;
+            ctx.globalCompositeOperation = "destination-out";
+            ctx.beginPath();
+            ctx.arc(x, y, 15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        canvas.addEventListener("mousedown", startScratching);
+        canvas.addEventListener("mouseup", stopScratching);
+        canvas.addEventListener("mousemove", scratch);
+        
+        canvas.addEventListener("touchstart", startScratching);
+        canvas.addEventListener("touchend", stopScratching);
+        canvas.addEventListener("touchmove", scratch);
+    </script>
+</body>
+</html>
