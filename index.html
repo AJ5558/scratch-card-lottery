@@ -37,9 +37,48 @@
             color: #28a745;
             margin-top: 20px;
         }
+        .verification-form, .otp-form {
+            display: none;
+            text-align: center;
+        }
+        .verification-form input, .otp-form input {
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            width: 80%;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .verification-form button, .otp-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .verification-form button:hover, .otp-form button:hover {
+            background-color: #218838;
+        }
     </style>
 </head>
 <body>
+
+    <!-- Verification Form -->
+    <div class="verification-form">
+        <h2>Enter Your Mobile Number</h2>
+        <input type="text" id="mobileNumber" placeholder="Enter mobile number" />
+        <button onclick="goToOtpPage()">Verify</button>
+    </div>
+
+    <!-- OTP Form -->
+    <div class="otp-form">
+        <h2>Enter OTP</h2>
+        <input type="text" id="otp" placeholder="Enter OTP" />
+        <button onclick="goToLotteryPage()">Enter</button>
+    </div>
+
+    <!-- Scratch Lottery -->
     <div class="container">
         <h1>Scratch & Win Lottery</h1>
         <p>Scratch the card below to reveal your prize!</p>
@@ -50,18 +89,46 @@
     </div>
 
     <script>
+        // Show the mobile number entry form
+        document.querySelector('.verification-form').style.display = 'block';
+
+        // Function to handle mobile number verification
+        function goToOtpPage() {
+            const mobileNumber = document.getElementById("mobileNumber").value;
+            if (mobileNumber === "") {
+                alert("Please enter a mobile number");
+            } else {
+                // In a real app, you would send the OTP here.
+                document.querySelector('.verification-form').style.display = 'none';
+                document.querySelector('.otp-form').style.display = 'block';
+            }
+        }
+
+        // Function to handle OTP entry
+        function goToLotteryPage() {
+            const otp = document.getElementById("otp").value;
+            if (otp === "") {
+                alert("Please enter the OTP");
+            } else {
+                // In a real app, you would verify the OTP here.
+                document.querySelector('.otp-form').style.display = 'none';
+                document.querySelector('.container').style.display = 'block';
+            }
+        }
+
+        // Scratch Lottery Functionality
         const canvas = document.getElementById("scratchCanvas");
         const ctx = canvas.getContext("2d");
         const prize = document.getElementById("prize");
-        
+
         canvas.width = 300;
         canvas.height = 150;
-        
+
         ctx.fillStyle = "#b8b8b8";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         let isScratching = false;
-        
+
         function startScratching(event) {
             isScratching = true;
             scratch(event);
@@ -81,14 +148,15 @@
             ctx.arc(x, y, 15, 0, Math.PI * 2);
             ctx.fill();
         }
-        
+
         canvas.addEventListener("mousedown", startScratching);
         canvas.addEventListener("mouseup", stopScratching);
         canvas.addEventListener("mousemove", scratch);
-        
+
         canvas.addEventListener("touchstart", startScratching);
         canvas.addEventListener("touchend", stopScratching);
         canvas.addEventListener("touchmove", scratch);
     </script>
+
 </body>
 </html>
