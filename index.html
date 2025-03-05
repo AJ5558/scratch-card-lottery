@@ -38,7 +38,7 @@
             margin-top: 20px;
         }
         .verification-form, .otp-form {
-            display: none;
+            display: block;
             text-align: center;
         }
         .verification-form input, .otp-form input {
@@ -72,14 +72,14 @@
     </div>
 
     <!-- OTP Form -->
-    <div class="otp-form">
+    <div class="otp-form" style="display: none;">
         <h2>Enter OTP</h2>
         <input type="text" id="otp" placeholder="Enter OTP" />
         <button onclick="goToLotteryPage()">Enter</button>
     </div>
 
     <!-- Scratch Lottery -->
-    <div class="container">
+    <div class="container" style="display: none;">
         <h1>Scratch & Win Lottery</h1>
         <p>Scratch the card below to reveal your prize!</p>
         <div class="scratch-card">
